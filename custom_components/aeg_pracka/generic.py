@@ -8,6 +8,8 @@ extra settings of laundry and dish care appliances.
 from __future__ import annotations
 
 from dataclasses import dataclass
+import json
+from pathlib import Path
 import re
 from typing import Any
 
@@ -29,6 +31,15 @@ IGNORED = re.compile(
     r"applianceCareAndMaintenance|dummy_for_empty_cycle|^applianceInfo|^networkInterface|SwVersion$|"
     r"clearCyclePersonalizationCmd|^cyclePersonalization|^fCPN_|^category|^miscellaneous)"
 )
+# Display names recovered from the official AEG app, per property (value -> English text).
+APP_NAMES: dict[str, dict[str, str]] = json.loads((Path(__file__).parent / "app_names.json").read_text(encoding="utf-8"))
+
+
+def label(path: str, raw: str) -> str:
+    """Readable label for a raw API value (falls back to the raw value)."""
+    return APP_NAMES.get(path.split("/")[-1], {}).get(str(raw).lower(), str(raw).lower())
+
+
 DURATION_SECONDS = re.compile(r"(timeToEnd|runningTime|targetDuration|startTime|stopTime|Duration|Timer)$", re.I)
 
 

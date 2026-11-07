@@ -333,7 +333,8 @@
         }
       },
       "rura_program": {
-        "name": "Oven programme"
+        "name": "Oven programme",
+        "state": {}
       },
       "rura_teplota": {
         "name": "Oven temperature"

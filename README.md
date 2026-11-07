@@ -1,8 +1,8 @@
 # AEG / Electrolux for Home Assistant
 
 [![HACS Custom](https://img.shields.io/badge/HACS-Custom-41BDF5.svg)](https://hacs.xyz/)
-[![GitHub release](https://img.shields.io/github/v/release/ktlko/ha-aeg-washer)](https://github.com/ktlko/ha-aeg-washer/releases)
-[![Validate](https://github.com/ktlko/ha-aeg-washer/actions/workflows/validate.yml/badge.svg)](https://github.com/ktlko/ha-aeg-washer/actions/workflows/validate.yml)
+[![GitHub release](https://img.shields.io/github/v/release/ktlko/ha-aeg-electrolux)](https://github.com/ktlko/ha-aeg-electrolux/releases)
+[![Validate](https://github.com/ktlko/ha-aeg-electrolux/actions/workflows/validate.yml/badge.svg)](https://github.com/ktlko/ha-aeg-electrolux/actions/workflows/validate.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 A clean, translated integration for **AEG and Electrolux appliances** – washing machines first using the official **Electrolux Group Developer API** – live updates, programme selection, start / pause / stop and a ready-made dashboard card.
@@ -38,7 +38,7 @@ other types get entities generated from what the appliance reports (names in Eng
 ### Untested
 
 These are supported by the code but **not verified on real hardware yet**. If you own one, please
-[open an issue](https://github.com/ktlko/ha-aeg-washer/issues) with the diagnostics file (it contains no tokens) –
+[open an issue](https://github.com/ktlko/ha-aeg-electrolux/issues) with the diagnostics file (it contains no tokens) –
 it helps a lot.
 
 | Appliance | API type | What you get |
@@ -73,10 +73,10 @@ on the device page.
 
 ### HACS (recommended)
 
-[![Open your Home Assistant instance and open this repository in HACS.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=ktlko&repository=ha-aeg-washer&category=integration)
+[![Open your Home Assistant instance and open this repository in HACS.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=ktlko&repository=ha-aeg-electrolux&category=integration)
 
 1. In Home Assistant open **HACS → ⋮ → Custom repositories**.
-2. Add `https://github.com/ktlko/ha-aeg-washer` with the type **Integration**.
+2. Add `https://github.com/ktlko/ha-aeg-electrolux` with the type **Integration**.
 3. Search for **AEG / Electrolux**, open it and click **Download**.
 4. Restart Home Assistant.
 5. Go to **Settings → Devices & services → Add integration** and pick **AEG / Electrolux**.
@@ -139,7 +139,7 @@ attach it to bug reports.
 
 ## Support
 
-Found a bug or have an idea? [Open an issue](https://github.com/ktlko/ha-aeg-washer/issues).
+Found a bug or have an idea? [Open an issue](https://github.com/ktlko/ha-aeg-electrolux/issues).
 
 If this integration saves you time, you can support the development:
 

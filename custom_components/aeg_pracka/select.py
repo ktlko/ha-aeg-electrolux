@@ -101,14 +101,16 @@ class GeneratedSelect(GeneratedEntity, SelectEntity):
 
     def __init__(self, coordinator, appliance_id: str, spec) -> None:
         super().__init__(coordinator, appliance_id, spec)
-        self._map = {v.lower(): v for v in spec.options}
+        self._map: dict[str, str] = {}
+        for v in spec.options:
+            name = generic.label(spec.path, v)
+            self._map[name if name not in self._map else f"{name} ({v.lower()})"] = v
         self._attr_options = list(self._map)
 
     @property
     def current_option(self) -> str | None:
         value = self.washer.get(self.spec.path)
-        key = str(value).lower() if value is not None else None
-        return key if key in self._map else None
+        return next((k for k, v in self._map.items() if v == value), None)
 
     async def async_select_option(self, option: str) -> None:
         w = self.washer
