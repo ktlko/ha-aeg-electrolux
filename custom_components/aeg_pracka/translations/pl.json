@@ -60,7 +60,9 @@
           "running": "Pierze",
           "paused": "Wstrzymana",
           "end_of_cycle": "Zakończone",
-          "alarm": "Awaria"
+          "alarm": "Awaria",
+          "other": "Inny",
+          "on": "Włączony"
         }
       },
       "program": {
@@ -189,6 +191,24 @@
           "enabled": "włączone",
           "disabled": "wyłączone"
         }
+      },
+      "rura_program": {
+        "name": "Program piekarnika"
+      },
+      "rura_teplota": {
+        "name": "Temperatura w piekarniku"
+      },
+      "rura_ciel": {
+        "name": "Temperatura zadana"
+      },
+      "sonda": {
+        "name": "Temperatura sondy"
+      },
+      "cas_behu": {
+        "name": "Czas pracy"
+      },
+      "nastaveny_cas": {
+        "name": "Ustawiony czas"
       }
     },
     "binary_sensor": {
@@ -296,6 +316,11 @@
           "1400_rpm": "1400 obr/min",
           "1600_rpm": "1600 obr/min"
         }
+      }
+    },
+    "number": {
+      "rura_nastavit_teplotu": {
+        "name": "Temperatura piekarnika"
       }
     }
   }

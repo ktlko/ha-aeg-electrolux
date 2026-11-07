@@ -17,7 +17,8 @@ from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 from . import AegPrackaConfigEntry
 from .const import RUNNING_STATES
 from .coordinator import Washer
-from .entity import AegPrackaEntity
+from . import generic
+from .entity import AegPrackaEntity, GeneratedEntity
 
 
 def _upper(value) -> str | None:
@@ -27,26 +28,31 @@ def _upper(value) -> str | None:
 @dataclass(frozen=True, kw_only=True)
 class AegBinaryDescription(BinarySensorEntityDescription):
     value_fn: Callable[[Washer], bool | None]
+    exists_fn: Callable[[Washer], bool] = lambda w: True
 
 
 BINARY_SENSORS: tuple[AegBinaryDescription, ...] = (
     AegBinaryDescription(
         key="perie",
+        exists_fn=lambda w: w.is_care,
         device_class=BinarySensorDeviceClass.RUNNING,
         value_fn=lambda w: None if w.state_key is None else w.state_key in RUNNING_STATES,
     ),
     AegBinaryDescription(
         key="doprate",
+        exists_fn=lambda w: w.is_care,
         icon="mdi:check-circle-outline",
         value_fn=lambda w: None if w.state_key is None else w.state_key == "end_of_cycle",
     ),
     AegBinaryDescription(
         key="dvierka",
+        exists_fn=lambda w: w.has("doorState"),
         device_class=BinarySensorDeviceClass.DOOR,
         value_fn=lambda w: None if (d := _upper(w.get("doorState"))) is None else d == "OPEN",
     ),
     AegBinaryDescription(
         key="zamok_dvierok",
+        exists_fn=lambda w: w.has("doorLock"),
         device_class=BinarySensorDeviceClass.LOCK,
         # LOCK device class: on = unlocked.
         value_fn=lambda w: None if (d := _upper(w.get("doorLock"))) is None else d != "ON",
@@ -66,11 +72,12 @@ async def async_setup_entry(
     async_add_entities: AddConfigEntryEntitiesCallback,
 ) -> None:
     coordinator = entry.runtime_data
-    async_add_entities(
-        AegBinarySensor(coordinator, appliance_id, desc)
-        for appliance_id in coordinator.washers
-        for desc in BINARY_SENSORS
-    )
+    entities: list[BinarySensorEntity] = []
+    for appliance_id, w in coordinator.washers.items():
+        entities += [AegBinarySensor(coordinator, appliance_id, d) for d in BINARY_SENSORS if d.exists_fn(w)]
+        entities += [GeneratedBinarySensor(coordinator, appliance_id, s)
+                     for s in generic.specs(w) if s.platform == "binary_sensor"]
+    async_add_entities(entities)
 
 
 class AegBinarySensor(AegPrackaEntity, BinarySensorEntity):
@@ -90,3 +97,16 @@ class AegBinarySensor(AegPrackaEntity, BinarySensorEntity):
         if self.entity_description.key == "pripojenie":
             return self.coordinator.last_update_success
         return super().available
+
+
+class GeneratedBinarySensor(GeneratedEntity, BinarySensorEntity):
+    """Read-only on/off capability."""
+
+    @property
+    def is_on(self) -> bool | None:
+        value = self.washer.get(self.spec.path)
+        if isinstance(value, bool):
+            return value
+        if isinstance(value, str):
+            return value.upper() in ("ON", "TRUE", "OPEN", "ENABLED", "1")
+        return None

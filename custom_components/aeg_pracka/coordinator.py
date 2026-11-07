@@ -29,7 +29,7 @@ from .const import (
     HIDDEN_PROGRAMS,
     RUNNING_STATES,
     SCAN_INTERVAL,
-    WASHER_TYPES,
+    CARE_TYPES,
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -37,7 +37,7 @@ _LOGGER = logging.getLogger(__name__)
 
 @dataclass
 class Washer:
-    """One washer: static info plus the latest state."""
+    """One Electrolux appliance: static info plus the latest state."""
 
     appliance: Appliance
     details: ApplianceDetails | None
@@ -73,20 +73,38 @@ class Washer:
         conn = self.state.connectionState or self.get("connectivityState") or ""
         return str(conn).lower() == "connected"
 
-    def capability_values(self, path: str) -> list[str]:
-        """Allowed values for a capability (e.g. 'userSelections/programUID')."""
+    @property
+    def type(self) -> str:
+        return self.appliance.applianceType
+
+    @property
+    def is_care(self) -> bool:
+        return self.type in CARE_TYPES
+
+    def capability(self, path: str) -> dict[str, Any] | None:
+        """Capability description ({type, access, values, min, max, step}) of a property."""
         if self.details is None:
-            return []
+            return None
         cap = self.details.capabilities.get(path)
         if cap is None:
-            # Capabilities can also be nested.
             node: Any = self.details.capabilities
             for key in path.split("/"):
-                node = node.get(key, {}) if isinstance(node, dict) else {}
+                node = node.get(key) if isinstance(node, dict) else None
             cap = node
-        values = cap.get("values", {}) if isinstance(cap, dict) else {}
+        return cap if isinstance(cap, dict) else None
+
+    def has(self, path: str) -> bool:
+        """The appliance reports or describes this property."""
+        return self.get(path) is not None or self.capability(path) is not None
+
+    def capability_values(self, path: str) -> list[str]:
+        """Allowed values for a capability (e.g. 'userSelections/programUID')."""
+        cap = self.capability(path) or {}
+        values = cap.get("values") or {}
+        if isinstance(values, list):
+            values = {str(v): {} for v in values}
         return [
-            k
+            str(k)
             for k, meta in values.items()
             if k != "DISABLED"
             and k not in HIDDEN_PROGRAMS
@@ -168,8 +186,6 @@ class AegPrackaCoordinator(DataUpdateCoordinator[dict[str, Washer]]):
             raise UpdateFailed(f"Cannot list appliances: {err}") from err
 
         for appliance in appliances:
-            if appliance.applianceType not in WASHER_TYPES:
-                continue
             try:
                 details = await self.client.get_appliance_details(appliance.applianceId)
             except Exception as err:  # noqa: BLE001
@@ -178,7 +194,7 @@ class AegPrackaCoordinator(DataUpdateCoordinator[dict[str, Washer]]):
             self.washers[appliance.applianceId] = Washer(appliance, details, None)
 
         if not self.washers:
-            _LOGGER.warning("No washer found on the Electrolux account")
+            _LOGGER.warning("No appliance found on the Electrolux account")
 
     async def _async_update_data(self) -> dict[str, Washer]:
         for appliance_id, washer in self.washers.items():

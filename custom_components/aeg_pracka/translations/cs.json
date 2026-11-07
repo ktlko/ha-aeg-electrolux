@@ -60,7 +60,9 @@
           "running": "Pere",
           "paused": "Pozastavená",
           "end_of_cycle": "Dopráno",
-          "alarm": "Porucha"
+          "alarm": "Porucha",
+          "other": "Jiný",
+          "on": "Zapnutý"
         }
       },
       "program": {
@@ -189,6 +191,24 @@
           "enabled": "povoleno",
           "disabled": "zakázáno"
         }
+      },
+      "rura_program": {
+        "name": "Program trouby"
+      },
+      "rura_teplota": {
+        "name": "Teplota v troubě"
+      },
+      "rura_ciel": {
+        "name": "Nastavená teplota"
+      },
+      "sonda": {
+        "name": "Teplota pečicí sondy"
+      },
+      "cas_behu": {
+        "name": "Doba běhu"
+      },
+      "nastaveny_cas": {
+        "name": "Nastavená doba"
       }
     },
     "binary_sensor": {
@@ -296,6 +316,11 @@
           "1400_rpm": "1400 ot/min",
           "1600_rpm": "1600 ot/min"
         }
+      }
+    },
+    "number": {
+      "rura_nastavit_teplotu": {
+        "name": "Teplota trouby"
       }
     }
   }

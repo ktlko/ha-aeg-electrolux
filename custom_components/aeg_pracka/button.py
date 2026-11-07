@@ -7,7 +7,8 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 
 from . import AegPrackaConfigEntry
-from .entity import AegPrackaEntity
+from . import generic
+from .entity import AegPrackaEntity, GeneratedEntity
 
 # translation key -> executeCommand value
 BUTTONS: tuple[tuple[ButtonEntityDescription, str], ...] = (
@@ -26,11 +27,13 @@ async def async_setup_entry(
     async_add_entities: AddConfigEntryEntitiesCallback,
 ) -> None:
     coordinator = entry.runtime_data
-    async_add_entities(
-        AegButton(coordinator, appliance_id, desc, command)
-        for appliance_id in coordinator.washers
-        for desc, command in BUTTONS
-    )
+    entities: list[ButtonEntity] = []
+    for appliance_id, w in coordinator.washers.items():
+        allowed = set(w.capability_values("executeCommand"))
+        if w.is_care:
+            entities += [AegButton(coordinator, appliance_id, d, c) for d, c in BUTTONS if not allowed or c in allowed]
+        entities += [GeneratedButton(coordinator, appliance_id, s) for s in generic.specs(w) if s.platform == "button"]
+    async_add_entities(entities)
 
 
 class AegButton(AegPrackaEntity, ButtonEntity):
@@ -41,3 +44,11 @@ class AegButton(AegPrackaEntity, ButtonEntity):
 
     async def async_press(self) -> None:
         await self.coordinator.async_send(self._appliance_id, {"executeCommand": self._command})
+
+
+class GeneratedButton(GeneratedEntity, ButtonEntity):
+    """Writes one value of a write-only capability (e.g. executeCommand START)."""
+
+    async def async_press(self) -> None:
+        w = self.washer
+        await self.coordinator.async_send(self._appliance_id, generic.command(w, self.spec.path, self.spec.command))

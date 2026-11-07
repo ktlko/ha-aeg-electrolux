@@ -5,7 +5,7 @@
 [![Validate](https://github.com/ktlko/ha-aeg-washer/actions/workflows/validate.yml/badge.svg)](https://github.com/ktlko/ha-aeg-washer/actions/workflows/validate.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-A clean, translated integration for **AEG and Electrolux washing machines** using the official **Electrolux Group Developer API** – live updates, programme selection, start / pause / stop and a ready-made dashboard card.
+A clean, translated integration for **AEG and Electrolux appliances** – washing machines first using the official **Electrolux Group Developer API** – live updates, programme selection, start / pause / stop and a ready-made dashboard card.
 
 [![Buy me a coffee](https://img.buymeacoffee.com/button-api/?text=Buy%20me%20a%20coffee&emoji=&slug=kotelino&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff)](https://www.buymeacoffee.com/kotelino)
 
@@ -23,9 +23,46 @@ A clean, translated integration for **AEG and Electrolux washing machines** usin
 - tokens are refreshed and saved automatically; re-authentication when they expire
 - **bundled Lovelace card** – no extra resource needed
 
+## Supported appliances
+
+Everything is read from the official Electrolux Group Developer API, so any appliance you see in the
+My AEG / My Electrolux app shows up. Laundry and dish care appliances get a curated set of entities;
+other types get entities generated from what the appliance reports (names in English).
+
+### Tested
+
+| Appliance | API type | What you get |
+| --- | --- | --- |
+| Washing machine | `WM` | everything listed under *Features*, dashboard card |
+
+### Untested
+
+These are supported by the code but **not verified on real hardware yet**. If you own one, please
+[open an issue](https://github.com/ktlko/ha-aeg-washer/issues) with the diagnostics file (it contains no tokens) –
+it helps a lot.
+
+| Appliance | API type | What you get |
+| --- | --- | --- |
+| Washer-dryer | `WD` | same as the washer: status, programme, phase, time remaining, progress, start/pause/stop, card |
+| Tumble dryer | `TD` | status, programme, phase, time remaining, progress, start/pause/stop, card |
+| Dishwasher | `DW` | status, programme, phase, time remaining, progress, start/pause/stop, card |
+| Oven, steam oven | `OV`, `SO` | status, programme (sensor + select), cavity and target temperature, temperature setpoint, food probe, running time, set duration, cavity light, start/stop |
+| Fridge / freezer | `CR` | status, door, compartment temperatures and setpoints, filters, holiday mode, child lock (generated) |
+| Cooker hood | `HD` | fan level, light, filter timers … (generated) |
+| Hob | `HB` | status, zones, child lock … (generated) |
+| Air conditioner | `AC`, `Azul`, `Bogong`, `Panther`, `Telica`, `CA`, DAM | mode, fan speed, target and room temperature, on/off (generated) |
+| Air purifier | `PUREA9`, `Muju`, `Fuji`, `Verbier`, `Wella5/7` | work mode, fan speed, PM1 / PM2.5 / PM10, TVOC (generated) |
+| Dehumidifier | `DH`, `Husky` | mode, target and room humidity, fan speed (generated) |
+| Robot vacuum | `PUREi9`, `Gordias`, `Cybele`, `700 series` | status, battery, power mode, play / pause / stop / home (generated) |
+
+*Generated* entities are built from the capabilities the appliance reports (type, access, allowed values, ranges):
+read-only values become sensors and binary sensors, writable ones become selects, numbers and switches, and commands
+become buttons. On washers, dryers and dishwashers these extra settings start **disabled** – enable the ones you need
+on the device page.
+
 ## Requirements
 
-- An AEG / Electrolux washer connected to the **My AEG / My Electrolux** app
+- An AEG / Electrolux appliance connected to the **My AEG / My Electrolux** app
 - A free account at **[developer.electrolux.one](https://developer.electrolux.one/)**:
   1. Sign in with the same account you use in the app.
   2. Create an **API key**.
@@ -53,7 +90,7 @@ configuration (the folder that contains `configuration.yaml`) and restart Home A
 
 ## Configuration
 
-Enter the **API key**, **access token** and **refresh token**. All washers of the account are added.
+Enter the **API key**, **access token** and **refresh token**. All appliances of the account are added.
 The tokens rotate; the integration stores the new ones itself. When they become invalid Home Assistant asks
 for new ones (re-authentication).
 

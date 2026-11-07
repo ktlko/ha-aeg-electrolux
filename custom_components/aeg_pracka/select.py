@@ -11,7 +11,8 @@ from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 from . import AegPrackaConfigEntry
 from .const import state_key
 from .coordinator import Washer
-from .entity import AegPrackaEntity
+from . import generic
+from .entity import AegPrackaEntity, GeneratedEntity
 
 
 @dataclass(frozen=True, kw_only=True)
@@ -37,6 +38,12 @@ async def async_setup_entry(
         for appliance_id in coordinator.washers
         for desc in SELECTS
         if coordinator.washers[appliance_id].capability_values(f"userSelections/{desc.prop}")
+    )
+    async_add_entities(
+        GeneratedSelect(coordinator, appliance_id, s)
+        for appliance_id, w in coordinator.washers.items()
+        for s in generic.specs(w)
+        if s.platform == "select"
     )
 
 
@@ -87,3 +94,22 @@ class AegSelect(AegPrackaEntity, SelectEntity):
             # The API requires the program alongside temperature / spin changes.
             selections["programUID"] = self.washer.get("userSelections/programUID")
         await self.coordinator.async_send(self._appliance_id, {"userSelections": selections})
+
+
+class GeneratedSelect(GeneratedEntity, SelectEntity):
+    """Writable capability with a list of values."""
+
+    def __init__(self, coordinator, appliance_id: str, spec) -> None:
+        super().__init__(coordinator, appliance_id, spec)
+        self._map = {v.lower(): v for v in spec.options}
+        self._attr_options = list(self._map)
+
+    @property
+    def current_option(self) -> str | None:
+        value = self.washer.get(self.spec.path)
+        key = str(value).lower() if value is not None else None
+        return key if key in self._map else None
+
+    async def async_select_option(self, option: str) -> None:
+        w = self.washer
+        await self.coordinator.async_send(self._appliance_id, generic.command(w, self.spec.path, self._map[option]))

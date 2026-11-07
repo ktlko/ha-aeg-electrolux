@@ -60,7 +60,9 @@
           "running": "Lavando",
           "paused": "En pausa",
           "end_of_cycle": "Terminado",
-          "alarm": "Avería"
+          "alarm": "Avería",
+          "other": "Otro",
+          "on": "Encendido"
         }
       },
       "program": {
@@ -189,6 +191,24 @@
           "enabled": "activado",
           "disabled": "desactivado"
         }
+      },
+      "rura_program": {
+        "name": "Programa del horno"
+      },
+      "rura_teplota": {
+        "name": "Temperatura del horno"
+      },
+      "rura_ciel": {
+        "name": "Temperatura objetivo"
+      },
+      "sonda": {
+        "name": "Temperatura de la sonda"
+      },
+      "cas_behu": {
+        "name": "Tiempo en marcha"
+      },
+      "nastaveny_cas": {
+        "name": "Duración ajustada"
       }
     },
     "binary_sensor": {
@@ -296,6 +316,11 @@
           "1400_rpm": "1400 rpm",
           "1600_rpm": "1600 rpm"
         }
+      }
+    },
+    "number": {
+      "rura_nastavit_teplotu": {
+        "name": "Consigna del horno"
       }
     }
   }

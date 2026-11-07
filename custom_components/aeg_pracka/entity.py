@@ -37,3 +37,16 @@ class AegPrackaEntity(CoordinatorEntity[AegPrackaCoordinator]):
     @property
     def available(self) -> bool:
         return super().available and self.washer.state is not None
+
+
+class GeneratedEntity(AegPrackaEntity):
+    """Entity created from an appliance capability (name in English, not translated)."""
+
+    def __init__(self, coordinator: AegPrackaCoordinator, appliance_id: str, spec) -> None:
+        key = "g_" + spec.path.replace("/", "_").lower() + (f"_{spec.command.lower()}" if spec.command else "")
+        super().__init__(coordinator, appliance_id, key)
+        self._attr_translation_key = None
+        self._attr_name = spec.name
+        self.spec = spec
+        # Keep laundry/dish care devices tidy: their extra settings start disabled.
+        self._attr_entity_registry_enabled_default = not coordinator.washers[appliance_id].is_care

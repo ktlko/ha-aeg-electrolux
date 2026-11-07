@@ -60,7 +60,9 @@
           "running": "In lavaggio",
           "paused": "In pausa",
           "end_of_cycle": "Terminato",
-          "alarm": "Guasto"
+          "alarm": "Guasto",
+          "other": "Altro",
+          "on": "Acceso"
         }
       },
       "program": {
@@ -189,6 +191,24 @@
           "enabled": "attivato",
           "disabled": "disattivato"
         }
+      },
+      "rura_program": {
+        "name": "Programma forno"
+      },
+      "rura_teplota": {
+        "name": "Temperatura forno"
+      },
+      "rura_ciel": {
+        "name": "Temperatura impostata"
+      },
+      "sonda": {
+        "name": "Temperatura sonda"
+      },
+      "cas_behu": {
+        "name": "Tempo di funzionamento"
+      },
+      "nastaveny_cas": {
+        "name": "Durata impostata"
       }
     },
     "binary_sensor": {
@@ -296,6 +316,11 @@
           "1400_rpm": "1400 giri/min",
           "1600_rpm": "1600 giri/min"
         }
+      }
+    },
+    "number": {
+      "rura_nastavit_teplotu": {
+        "name": "Setpoint forno"
       }
     }
   }

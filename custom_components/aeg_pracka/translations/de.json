@@ -60,7 +60,9 @@
           "running": "Wäscht",
           "paused": "Pausiert",
           "end_of_cycle": "Fertig",
-          "alarm": "Störung"
+          "alarm": "Störung",
+          "other": "Andere",
+          "on": "Ein"
         }
       },
       "program": {
@@ -189,6 +191,24 @@
           "enabled": "aktiviert",
           "disabled": "deaktiviert"
         }
+      },
+      "rura_program": {
+        "name": "Backofenprogramm"
+      },
+      "rura_teplota": {
+        "name": "Backofentemperatur"
+      },
+      "rura_ciel": {
+        "name": "Solltemperatur"
+      },
+      "sonda": {
+        "name": "Kerntemperatur (Fühler)"
+      },
+      "cas_behu": {
+        "name": "Laufzeit"
+      },
+      "nastaveny_cas": {
+        "name": "Eingestellte Dauer"
       }
     },
     "binary_sensor": {
@@ -296,6 +316,11 @@
           "1400_rpm": "1400 U/min",
           "1600_rpm": "1600 U/min"
         }
+      }
+    },
+    "number": {
+      "rura_nastavit_teplotu": {
+        "name": "Backofen-Solltemperatur"
       }
     }
   }

@@ -11,7 +11,11 @@ CONF_REFRESH_TOKEN = "refresh_token"
 # Safety-net poll; live updates come from the SSE stream.
 SCAN_INTERVAL = timedelta(minutes=5)
 
-WASHER_TYPES = ("WM", "WD")
+# Appliance families. Care = laundry and dish care with programmes and cycles.
+CARE_TYPES = ("WM", "WD", "TD", "DW")
+COOK_TYPES = ("OV", "SO")
+# Types confirmed on real hardware; everything else is labelled untested.
+TESTED_TYPES = ("WM",)
 
 CARD_URL = "/aeg_pracka/aeg-pracka-card.js"
 
@@ -25,6 +29,8 @@ APPLIANCE_STATES = {
     "PAUSED": "paused",
     "END_OF_CYCLE": "end_of_cycle",
     "ALARM": "alarm",
+    "ON": "on",
+    "STANDBY": "idle",
 }
 
 RUNNING_STATES = ("running", "paused", "delayed_start")
