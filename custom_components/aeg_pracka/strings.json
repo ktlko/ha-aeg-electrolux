@@ -221,7 +221,7 @@
           "training_gear_pr_traininggear": "Training gear",
           "non_stop_3kg_3h_nonstop3h_3kg": "Non-stop 3h (3kg)",
           "non_stop_3kg_3h_one_go_3h_3kg": "Non-stop 3h (3kg)",
-          "machine_care": "Machine clean",
+          "machine_care": "Machine care",
           "washers_duvet": "Duvet",
           "washers_heavy": "Heavy/Jeans",
           "washers_stain_removal": "Stains",
@@ -232,7 +232,16 @@
           "washers_soft": "Delicate / Sport",
           "washers_normal": "Normal",
           "lwi13_fast": "Quick",
-          "odermatt_39_min": "Odermatt Speed 39min"
+          "odermatt_39_min": "Odermatt Speed 39min",
+          "auto": "Auto",
+          "eco": "Eco",
+          "quick30": "30 minutes",
+          "quick60": "1 hour",
+          "intensive": "2h 40m",
+          "normal90": "1h 30m",
+          "rinse": "Pre-rinse",
+          "120_min": "2 hours",
+          "silent": "Night"
         }
       },
       "faza": {
@@ -536,7 +545,7 @@
           "training_gear_pr_traininggear": "Training gear",
           "non_stop_3kg_3h_nonstop3h_3kg": "Non-stop 3h (3kg)",
           "non_stop_3kg_3h_one_go_3h_3kg": "Non-stop 3h (3kg)",
-          "machine_care": "Machine clean",
+          "machine_care": "Machine care",
           "washers_duvet": "Duvet",
           "washers_heavy": "Heavy/Jeans",
           "washers_stain_removal": "Stains",
@@ -547,7 +556,16 @@
           "washers_soft": "Delicate / Sport",
           "washers_normal": "Normal",
           "lwi13_fast": "Quick",
-          "odermatt_39_min": "Odermatt Speed 39min"
+          "odermatt_39_min": "Odermatt Speed 39min",
+          "auto": "Auto",
+          "eco": "Eco",
+          "quick30": "30 minutes",
+          "quick60": "1 hour",
+          "intensive": "2h 40m",
+          "normal90": "1h 30m",
+          "rinse": "Pre-rinse",
+          "120_min": "2 hours",
+          "silent": "Night"
         }
       },
       "vyber_teploty": {
