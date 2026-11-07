@@ -1,0 +1,302 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Cuenta Electrolux",
+        "description": "Inicia sesión en developer.electrolux.one, crea una clave API y genera un access token y un refresh token. Después los tokens se renuevan automáticamente.",
+        "data": {
+          "api_key": "Clave API",
+          "access_token": "Access token",
+          "refresh_token": "Refresh token"
+        },
+        "data_description": {
+          "api_key": "De developer.electrolux.one → API Keys",
+          "access_token": "De developer.electrolux.one → Generate token",
+          "refresh_token": "Se genera junto con el access token"
+        }
+      },
+      "reauth_confirm": {
+        "title": "Renovar inicio de sesión",
+        "description": "Los tokens ya no son válidos. Genera otros nuevos en developer.electrolux.one.",
+        "data": {
+          "api_key": "Clave API",
+          "access_token": "Access token",
+          "refresh_token": "Refresh token"
+        },
+        "data_description": {
+          "api_key": "De developer.electrolux.one → API Keys",
+          "access_token": "De developer.electrolux.one → Generate token",
+          "refresh_token": "Se genera junto con el access token"
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "Clave API o tokens no válidos.",
+      "cannot_connect": "No se puede conectar con la API de Electrolux."
+    },
+    "abort": {
+      "already_configured": "Esta cuenta de Electrolux ya está añadida.",
+      "reauth_successful": "Inicio de sesión renovado.",
+      "unique_id_mismatch": "Los tokens pertenecen a otra cuenta de Electrolux."
+    }
+  },
+  "exceptions": {
+    "remote_disabled": {
+      "message": "El control remoto está desactivado en la lavadora: actívalo en la lavadora (botón Wi-Fi / Remote)."
+    },
+    "command_failed": {
+      "message": "La lavadora rechazó la orden: {error}"
+    }
+  },
+  "entity": {
+    "sensor": {
+      "stav": {
+        "name": "Estado",
+        "state": {
+          "off": "Apagada",
+          "idle": "Lista",
+          "ready_to_start": "Lista para iniciar",
+          "delayed_start": "Inicio diferido",
+          "running": "Lavando",
+          "paused": "En pausa",
+          "end_of_cycle": "Terminado",
+          "alarm": "Avería"
+        }
+      },
+      "program": {
+        "name": "Programa",
+        "state": {
+          "baby_pr_baby_wm_wd": "Bebé",
+          "bedlinen_xl_pr_bedlinenxl": "Ropa de cama XL",
+          "blanket_pr_duvet": "Edredones",
+          "blanket_pr_pillows": "Almohadas",
+          "cotton_pr_cottons": "Algodón",
+          "cotton_pr_eco40-60": "Eco 40-60",
+          "delicate_pr_curtains": "Cortinas",
+          "delicate_pr_delicates": "Delicados",
+          "denim_pr_denim": "Vaqueros",
+          "drum_clean_pr_machineclean": "Limpieza del tambor",
+          "express_pr_businessshirt": "Camisas",
+          "express_pr_powerclean59min": "PowerClean 59 min",
+          "linen_pr_linen_wm_wd": "Lino",
+          "mini_pr_silk": "Seda",
+          "one_item_fast_pr_1itemfast": "1 prenda rápido",
+          "pet_hair_pr_pethair": "Pelo de mascotas",
+          "quick_20_min_pr_20min3kg": "20 min 3 kg",
+          "sanitise60_pr_antiallergyvapour": "Antialergia vapor",
+          "sanitise60_pr_hygiene": "Higiene 60",
+          "shoes_pr_runningshoes": "Zapatillas",
+          "soccer_rugby_soccer_rugby": "Fútbol / rugby",
+          "softener_pr_rinse": "Aclarado",
+          "spin_pr_drain_spin": "Desagüe / centrifugado",
+          "sportwear_pr_sportwear_wx": "Ropa deportiva",
+          "sport_jackets_pr_down_jacket": "Chaquetas de plumas",
+          "sport_jackets_pr_outdoor": "Outdoor",
+          "sport_jackets_pr_skiing": "Ropa de esquí",
+          "steam_dewrinkler_pr_steamcashmere": "Vapor cachemir",
+          "steam_refresh_pr_steam": "Refrescar con vapor",
+          "synthetic_pr_easyiron": "Fácil planchado",
+          "synthetic_pr_synthetics": "Sintéticos",
+          "towels_pr_towels_base": "Toallas",
+          "training_gear_pr_dailytraining": "Entrenamiento diario",
+          "wool_pr_wool": "Lana"
+        }
+      },
+      "faza": {
+        "name": "Fase",
+        "state": {
+          "none": "–",
+          "wash": "Lavado",
+          "prewash": "Prelavado",
+          "rinse": "Aclarado",
+          "spin": "Centrifugado",
+          "dry": "Secado",
+          "steam": "Vapor",
+          "anticrease": "Antiarrugas",
+          "cooldown": "Enfriamiento",
+          "soak": "Remojo",
+          "other": "Otra"
+        }
+      },
+      "zostava": {
+        "name": "Tiempo restante"
+      },
+      "koniec": {
+        "name": "Termina a las"
+      },
+      "priebeh": {
+        "name": "Progreso"
+      },
+      "teplota": {
+        "name": "Temperatura",
+        "state": {
+          "cold": "Fría",
+          "20_celsius": "20 °C",
+          "30_celsius": "30 °C",
+          "40_celsius": "40 °C",
+          "50_celsius": "50 °C",
+          "60_celsius": "60 °C",
+          "70_celsius": "70 °C",
+          "80_celsius": "80 °C",
+          "90_celsius": "90 °C",
+          "95_celsius": "95 °C"
+        }
+      },
+      "odstredovanie": {
+        "name": "Centrifugado",
+        "state": {
+          "no_spin": "Sin centrifugado",
+          "rinse_hold": "Parada con agua",
+          "400_rpm": "400 rpm",
+          "600_rpm": "600 rpm",
+          "800_rpm": "800 rpm",
+          "1000_rpm": "1000 rpm",
+          "1200_rpm": "1200 rpm",
+          "1400_rpm": "1400 rpm",
+          "1600_rpm": "1600 rpm"
+        }
+      },
+      "napln": {
+        "name": "Carga"
+      },
+      "tvrdost_vody": {
+        "name": "Dureza del agua"
+      },
+      "signal": {
+        "name": "Señal Wi-Fi",
+        "state": {
+          "excellent": "excelente",
+          "very_good": "muy buena",
+          "good": "buena",
+          "fair": "regular",
+          "poor": "débil",
+          "very_poor": "muy débil",
+          "undefined": "desconocida"
+        }
+      },
+      "pocet_cyklov": {
+        "name": "Ciclos de lavado"
+      },
+      "odpracovane": {
+        "name": "Horas de funcionamiento"
+      },
+      "upozornenia": {
+        "name": "Avisos"
+      },
+      "dialkove_ovladanie": {
+        "name": "Control remoto",
+        "state": {
+          "enabled": "activado",
+          "disabled": "desactivado"
+        }
+      }
+    },
+    "binary_sensor": {
+      "perie": {
+        "name": "Lavando"
+      },
+      "doprate": {
+        "name": "Terminado"
+      },
+      "dvierka": {
+        "name": "Puerta"
+      },
+      "zamok_dvierok": {
+        "name": "Bloqueo de puerta"
+      },
+      "pripojenie": {
+        "name": "Conexión"
+      }
+    },
+    "button": {
+      "start": {
+        "name": "Iniciar"
+      },
+      "pauza": {
+        "name": "Pausa"
+      },
+      "pokracovat": {
+        "name": "Reanudar"
+      },
+      "stop": {
+        "name": "Detener"
+      },
+      "zapnut": {
+        "name": "Encender"
+      },
+      "vypnut": {
+        "name": "Apagar"
+      }
+    },
+    "select": {
+      "vyber_programu": {
+        "name": "Selección de programa",
+        "state": {
+          "baby_pr_baby_wm_wd": "Bebé",
+          "bedlinen_xl_pr_bedlinenxl": "Ropa de cama XL",
+          "blanket_pr_duvet": "Edredones",
+          "blanket_pr_pillows": "Almohadas",
+          "cotton_pr_cottons": "Algodón",
+          "cotton_pr_eco40-60": "Eco 40-60",
+          "delicate_pr_curtains": "Cortinas",
+          "delicate_pr_delicates": "Delicados",
+          "denim_pr_denim": "Vaqueros",
+          "drum_clean_pr_machineclean": "Limpieza del tambor",
+          "express_pr_businessshirt": "Camisas",
+          "express_pr_powerclean59min": "PowerClean 59 min",
+          "linen_pr_linen_wm_wd": "Lino",
+          "mini_pr_silk": "Seda",
+          "one_item_fast_pr_1itemfast": "1 prenda rápido",
+          "pet_hair_pr_pethair": "Pelo de mascotas",
+          "quick_20_min_pr_20min3kg": "20 min 3 kg",
+          "sanitise60_pr_antiallergyvapour": "Antialergia vapor",
+          "sanitise60_pr_hygiene": "Higiene 60",
+          "shoes_pr_runningshoes": "Zapatillas",
+          "soccer_rugby_soccer_rugby": "Fútbol / rugby",
+          "softener_pr_rinse": "Aclarado",
+          "spin_pr_drain_spin": "Desagüe / centrifugado",
+          "sportwear_pr_sportwear_wx": "Ropa deportiva",
+          "sport_jackets_pr_down_jacket": "Chaquetas de plumas",
+          "sport_jackets_pr_outdoor": "Outdoor",
+          "sport_jackets_pr_skiing": "Ropa de esquí",
+          "steam_dewrinkler_pr_steamcashmere": "Vapor cachemir",
+          "steam_refresh_pr_steam": "Refrescar con vapor",
+          "synthetic_pr_easyiron": "Fácil planchado",
+          "synthetic_pr_synthetics": "Sintéticos",
+          "towels_pr_towels_base": "Toallas",
+          "training_gear_pr_dailytraining": "Entrenamiento diario",
+          "wool_pr_wool": "Lana"
+        }
+      },
+      "vyber_teploty": {
+        "name": "Selección de temperatura",
+        "state": {
+          "cold": "Fría",
+          "20_celsius": "20 °C",
+          "30_celsius": "30 °C",
+          "40_celsius": "40 °C",
+          "50_celsius": "50 °C",
+          "60_celsius": "60 °C",
+          "70_celsius": "70 °C",
+          "80_celsius": "80 °C",
+          "90_celsius": "90 °C",
+          "95_celsius": "95 °C"
+        }
+      },
+      "vyber_otacok": {
+        "name": "Selección de centrifugado",
+        "state": {
+          "no_spin": "Sin centrifugado",
+          "rinse_hold": "Parada con agua",
+          "400_rpm": "400 rpm",
+          "600_rpm": "600 rpm",
+          "800_rpm": "800 rpm",
+          "1000_rpm": "1000 rpm",
+          "1200_rpm": "1200 rpm",
+          "1400_rpm": "1400 rpm",
+          "1600_rpm": "1600 rpm"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,302 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Electrolux účet",
+        "description": "Prihláste sa na developer.electrolux.one, vytvorte API kľúč a vygenerujte access a refresh token. Tokeny sa potom obnovujú automaticky.",
+        "data": {
+          "api_key": "API kľúč",
+          "access_token": "Access token",
+          "refresh_token": "Refresh token"
+        },
+        "data_description": {
+          "api_key": "Z developer.electrolux.one → API Keys",
+          "access_token": "Z developer.electrolux.one → Generate token",
+          "refresh_token": "Vygeneruje sa spolu s access tokenom"
+        }
+      },
+      "reauth_confirm": {
+        "title": "Obnoviť prihlásenie",
+        "description": "Tokeny už neplatia. Vygenerujte nové na developer.electrolux.one.",
+        "data": {
+          "api_key": "API kľúč",
+          "access_token": "Access token",
+          "refresh_token": "Refresh token"
+        },
+        "data_description": {
+          "api_key": "Z developer.electrolux.one → API Keys",
+          "access_token": "Z developer.electrolux.one → Generate token",
+          "refresh_token": "Vygeneruje sa spolu s access tokenom"
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "Neplatný API kľúč alebo tokeny.",
+      "cannot_connect": "Nepodarilo sa pripojiť k Electrolux API."
+    },
+    "abort": {
+      "already_configured": "Tento Electrolux účet už je pridaný.",
+      "reauth_successful": "Prihlásenie obnovené.",
+      "unique_id_mismatch": "Tokeny patria inému Electrolux účtu."
+    }
+  },
+  "exceptions": {
+    "remote_disabled": {
+      "message": "Diaľkové ovládanie je na práčke vypnuté – zapnite ho na práčke (tlačidlo Wi-Fi / Remote)."
+    },
+    "command_failed": {
+      "message": "Práčka príkaz neprijala: {error}"
+    }
+  },
+  "entity": {
+    "sensor": {
+      "stav": {
+        "name": "Stav",
+        "state": {
+          "off": "Vypnutá",
+          "idle": "Pripravená",
+          "ready_to_start": "Pripravená na štart",
+          "delayed_start": "Odložený štart",
+          "running": "Perie",
+          "paused": "Pozastavená",
+          "end_of_cycle": "Doprané",
+          "alarm": "Porucha"
+        }
+      },
+      "program": {
+        "name": "Program",
+        "state": {
+          "baby_pr_baby_wm_wd": "Detské",
+          "bedlinen_xl_pr_bedlinenxl": "Posteľná bielizeň XL",
+          "blanket_pr_duvet": "Periny",
+          "blanket_pr_pillows": "Vankúše",
+          "cotton_pr_cottons": "Bavlna",
+          "cotton_pr_eco40-60": "Eco 40-60",
+          "delicate_pr_curtains": "Záclony",
+          "delicate_pr_delicates": "Jemná bielizeň",
+          "denim_pr_denim": "Džínsy",
+          "drum_clean_pr_machineclean": "Čistenie bubna",
+          "express_pr_businessshirt": "Košele",
+          "express_pr_powerclean59min": "PowerClean 59 min",
+          "linen_pr_linen_wm_wd": "Ľan",
+          "mini_pr_silk": "Hodváb",
+          "one_item_fast_pr_1itemfast": "1 kus rýchlo",
+          "pet_hair_pr_pethair": "Zvieracie chlpy",
+          "quick_20_min_pr_20min3kg": "20 min 3 kg",
+          "sanitise60_pr_antiallergyvapour": "Antialergia para",
+          "sanitise60_pr_hygiene": "Hygiena 60",
+          "shoes_pr_runningshoes": "Bežecké topánky",
+          "soccer_rugby_soccer_rugby": "Futbal / rugby",
+          "softener_pr_rinse": "Plákanie",
+          "spin_pr_drain_spin": "Odčerpanie / odstredenie",
+          "sportwear_pr_sportwear_wx": "Športové oblečenie",
+          "sport_jackets_pr_down_jacket": "Páperové bundy",
+          "sport_jackets_pr_outdoor": "Outdoor",
+          "sport_jackets_pr_skiing": "Lyžiarske oblečenie",
+          "steam_dewrinkler_pr_steamcashmere": "Para kašmír",
+          "steam_refresh_pr_steam": "Osvieženie parou",
+          "synthetic_pr_easyiron": "Ľahké žehlenie",
+          "synthetic_pr_synthetics": "Syntetika",
+          "towels_pr_towels_base": "Uteráky",
+          "training_gear_pr_dailytraining": "Denný tréning",
+          "wool_pr_wool": "Vlna"
+        }
+      },
+      "faza": {
+        "name": "Fáza",
+        "state": {
+          "none": "–",
+          "wash": "Pranie",
+          "prewash": "Predpierka",
+          "rinse": "Plákanie",
+          "spin": "Odstreďovanie",
+          "dry": "Sušenie",
+          "steam": "Para",
+          "anticrease": "Proti pokrčeniu",
+          "cooldown": "Chladenie",
+          "soak": "Namáčanie",
+          "other": "Iná"
+        }
+      },
+      "zostava": {
+        "name": "Zostáva"
+      },
+      "koniec": {
+        "name": "Koniec o"
+      },
+      "priebeh": {
+        "name": "Priebeh"
+      },
+      "teplota": {
+        "name": "Teplota",
+        "state": {
+          "cold": "Studená",
+          "20_celsius": "20 °C",
+          "30_celsius": "30 °C",
+          "40_celsius": "40 °C",
+          "50_celsius": "50 °C",
+          "60_celsius": "60 °C",
+          "70_celsius": "70 °C",
+          "80_celsius": "80 °C",
+          "90_celsius": "90 °C",
+          "95_celsius": "95 °C"
+        }
+      },
+      "odstredovanie": {
+        "name": "Odstreďovanie",
+        "state": {
+          "no_spin": "Bez odstreďovania",
+          "rinse_hold": "Zastavenie s vodou",
+          "400_rpm": "400 ot/min",
+          "600_rpm": "600 ot/min",
+          "800_rpm": "800 ot/min",
+          "1000_rpm": "1000 ot/min",
+          "1200_rpm": "1200 ot/min",
+          "1400_rpm": "1400 ot/min",
+          "1600_rpm": "1600 ot/min"
+        }
+      },
+      "napln": {
+        "name": "Náplň"
+      },
+      "tvrdost_vody": {
+        "name": "Tvrdosť vody"
+      },
+      "signal": {
+        "name": "Wi-Fi signál",
+        "state": {
+          "excellent": "výborný",
+          "very_good": "veľmi dobrý",
+          "good": "dobrý",
+          "fair": "priemerný",
+          "poor": "slabý",
+          "very_poor": "veľmi slabý",
+          "undefined": "neznámy"
+        }
+      },
+      "pocet_cyklov": {
+        "name": "Počet praní"
+      },
+      "odpracovane": {
+        "name": "Odpracované hodiny"
+      },
+      "upozornenia": {
+        "name": "Upozornenia"
+      },
+      "dialkove_ovladanie": {
+        "name": "Diaľkové ovládanie",
+        "state": {
+          "enabled": "povolené",
+          "disabled": "zakázané"
+        }
+      }
+    },
+    "binary_sensor": {
+      "perie": {
+        "name": "Perie"
+      },
+      "doprate": {
+        "name": "Doprané"
+      },
+      "dvierka": {
+        "name": "Dvierka"
+      },
+      "zamok_dvierok": {
+        "name": "Zámok dvierok"
+      },
+      "pripojenie": {
+        "name": "Pripojenie"
+      }
+    },
+    "button": {
+      "start": {
+        "name": "Štart"
+      },
+      "pauza": {
+        "name": "Pauza"
+      },
+      "pokracovat": {
+        "name": "Pokračovať"
+      },
+      "stop": {
+        "name": "Stop"
+      },
+      "zapnut": {
+        "name": "Zapnúť"
+      },
+      "vypnut": {
+        "name": "Vypnúť"
+      }
+    },
+    "select": {
+      "vyber_programu": {
+        "name": "Výber programu",
+        "state": {
+          "baby_pr_baby_wm_wd": "Detské",
+          "bedlinen_xl_pr_bedlinenxl": "Posteľná bielizeň XL",
+          "blanket_pr_duvet": "Periny",
+          "blanket_pr_pillows": "Vankúše",
+          "cotton_pr_cottons": "Bavlna",
+          "cotton_pr_eco40-60": "Eco 40-60",
+          "delicate_pr_curtains": "Záclony",
+          "delicate_pr_delicates": "Jemná bielizeň",
+          "denim_pr_denim": "Džínsy",
+          "drum_clean_pr_machineclean": "Čistenie bubna",
+          "express_pr_businessshirt": "Košele",
+          "express_pr_powerclean59min": "PowerClean 59 min",
+          "linen_pr_linen_wm_wd": "Ľan",
+          "mini_pr_silk": "Hodváb",
+          "one_item_fast_pr_1itemfast": "1 kus rýchlo",
+          "pet_hair_pr_pethair": "Zvieracie chlpy",
+          "quick_20_min_pr_20min3kg": "20 min 3 kg",
+          "sanitise60_pr_antiallergyvapour": "Antialergia para",
+          "sanitise60_pr_hygiene": "Hygiena 60",
+          "shoes_pr_runningshoes": "Bežecké topánky",
+          "soccer_rugby_soccer_rugby": "Futbal / rugby",
+          "softener_pr_rinse": "Plákanie",
+          "spin_pr_drain_spin": "Odčerpanie / odstredenie",
+          "sportwear_pr_sportwear_wx": "Športové oblečenie",
+          "sport_jackets_pr_down_jacket": "Páperové bundy",
+          "sport_jackets_pr_outdoor": "Outdoor",
+          "sport_jackets_pr_skiing": "Lyžiarske oblečenie",
+          "steam_dewrinkler_pr_steamcashmere": "Para kašmír",
+          "steam_refresh_pr_steam": "Osvieženie parou",
+          "synthetic_pr_easyiron": "Ľahké žehlenie",
+          "synthetic_pr_synthetics": "Syntetika",
+          "towels_pr_towels_base": "Uteráky",
+          "training_gear_pr_dailytraining": "Denný tréning",
+          "wool_pr_wool": "Vlna"
+        }
+      },
+      "vyber_teploty": {
+        "name": "Výber teploty",
+        "state": {
+          "cold": "Studená",
+          "20_celsius": "20 °C",
+          "30_celsius": "30 °C",
+          "40_celsius": "40 °C",
+          "50_celsius": "50 °C",
+          "60_celsius": "60 °C",
+          "70_celsius": "70 °C",
+          "80_celsius": "80 °C",
+          "90_celsius": "90 °C",
+          "95_celsius": "95 °C"
+        }
+      },
+      "vyber_otacok": {
+        "name": "Výber otáčok",
+        "state": {
+          "no_spin": "Bez odstreďovania",
+          "rinse_hold": "Zastavenie s vodou",
+          "400_rpm": "400 ot/min",
+          "600_rpm": "600 ot/min",
+          "800_rpm": "800 ot/min",
+          "1000_rpm": "1000 ot/min",
+          "1200_rpm": "1200 ot/min",
+          "1400_rpm": "1400 ot/min",
+          "1600_rpm": "1600 ot/min"
+        }
+      }
+    }
+  }
+}

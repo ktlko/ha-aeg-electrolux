@@ -1,0 +1,20 @@
+{
+  "domain": "aeg_pracka",
+  "name": "AEG / Electrolux washer",
+  "codeowners": [
+    "@ktlko"
+  ],
+  "config_flow": true,
+  "dependencies": [
+    "http",
+    "frontend"
+  ],
+  "documentation": "https://github.com/ktlko/ha-aeg-washer",
+  "integration_type": "hub",
+  "iot_class": "cloud_push",
+  "issue_tracker": "https://github.com/ktlko/ha-aeg-washer/issues",
+  "requirements": [
+    "electrolux-group-developer-sdk>=0.7.0"
+  ],
+  "version": "1.0.0"
+}
