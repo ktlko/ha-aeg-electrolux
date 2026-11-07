@@ -1,4 +1,4 @@
-# AEG / Electrolux washer for Home Assistant
+# AEG / Electrolux for Home Assistant
 
 [![HACS Custom](https://img.shields.io/badge/HACS-Custom-41BDF5.svg)](https://hacs.xyz/)
 [![GitHub release](https://img.shields.io/github/v/release/ktlko/ha-aeg-washer)](https://github.com/ktlko/ha-aeg-washer/releases)
@@ -77,9 +77,9 @@ on the device page.
 
 1. In Home Assistant open **HACS → ⋮ → Custom repositories**.
 2. Add `https://github.com/ktlko/ha-aeg-washer` with the type **Integration**.
-3. Search for **AEG / Electrolux washer**, open it and click **Download**.
+3. Search for **AEG / Electrolux**, open it and click **Download**.
 4. Restart Home Assistant.
-5. Go to **Settings → Devices & services → Add integration** and pick **AEG / Electrolux washer**.
+5. Go to **Settings → Devices & services → Add integration** and pick **AEG / Electrolux**.
 
 [![Open your Home Assistant instance and start setting up the integration.](https://my.home-assistant.io/badges/config_flow_start.svg)](https://my.home-assistant.io/redirect/config_flow_start/?domain=aeg_pracka)
 
