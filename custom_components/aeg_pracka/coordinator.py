@@ -29,6 +29,7 @@ from .const import (
     HIDDEN_PROGRAMS,
     RUNNING_STATES,
     SCAN_INTERVAL,
+    ACTIVE_SCAN_INTERVAL,
     CARE_TYPES,
 )
 
@@ -205,6 +206,9 @@ class AegPrackaCoordinator(DataUpdateCoordinator[dict[str, Washer]]):
                     raise ConfigEntryAuthFailed("Electrolux rejected the credentials") from err
                 raise UpdateFailed(f"Cannot read washer state: {err}") from err
             washer.track_cycle()
+        # Poll every minute while something runs, so phase / time to end stay fresh.
+        busy = any(w.state_key in RUNNING_STATES for w in self.washers.values())
+        self.update_interval = ACTIVE_SCAN_INTERVAL if busy else SCAN_INTERVAL
         return self.washers
 
     # ---- live stream -------------------------------------------------------
@@ -229,9 +233,16 @@ class AegPrackaCoordinator(DataUpdateCoordinator[dict[str, Washer]]):
             washer = self.washers.get(appliance_id)
             if washer is None or washer.state is None:
                 return
+            before = washer.state_key
             washer.state = apply_sse_update(washer.state, event)
             washer.track_cycle()
-            self.async_set_updated_data(self.washers)
+            # Don't use async_set_updated_data: it postpones the REST poll on every
+            # SSE tick, and the stream does not always carry phase / time to end.
+            self.data = self.washers
+            self.async_update_listeners()
+            if washer.state_key != before:
+                # State changed (e.g. started) - fetch the full state right away.
+                self.hass.async_create_task(self.async_request_refresh())
 
         return _listener
 

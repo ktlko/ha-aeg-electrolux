@@ -10,6 +10,7 @@ CONF_REFRESH_TOKEN = "refresh_token"
 
 # Safety-net poll; live updates come from the SSE stream.
 SCAN_INTERVAL = timedelta(minutes=5)
+ACTIVE_SCAN_INTERVAL = timedelta(minutes=1)
 
 # Appliance families. Care = laundry and dish care with programmes and cycles.
 CARE_TYPES = ("WM", "WD", "TD", "DW")
