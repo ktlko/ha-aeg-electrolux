@@ -1,6 +1,6 @@
 /* AEG / Electrolux washer card – bundled with the aeg_pracka integration. */
 const KEYS = {
-  sensor: ["stav", "program", "faza", "zostava", "koniec", "priebeh", "teplota", "odstredovanie", "upozornenia", "pocet_cyklov"],
+  sensor: ["stav", "program", "faza", "zostava", "koniec", "priebeh", "teplota", "odstredovanie", "upozornenia", "pocet_cyklov", "napln", "prosense"],
   binary_sensor: ["perie", "dvierka", "zamok_dvierok", "pripojenie", "doprate"],
   button: ["start", "pauza", "pokracovat", "stop", "zapnut"],
 };
@@ -18,6 +18,7 @@ const COLORS = {
 
 const I18N = {
   en: {
+    load: "Load", overload: "Overloaded!",
     name: "Washer", none: "The AEG / Electrolux integration has no entities yet.", unavailable: "Unavailable",
     remaining: "Remaining", ends: "Ends at", temp: "Temperature", spin: "Spin",
     pause: "Pause", stop: "Stop", resume: "Resume", cancel: "Cancel", start: "Start", on: "Turn on",
@@ -27,6 +28,7 @@ const I18N = {
     h: "h", min: "min", desc: "Status, progress and control of the washer from the AEG / Electrolux integration.",
   },
   sk: {
+    load: "Náplň", overload: "Preťažená!",
     name: "Práčka", none: "Integrácia AEG / Electrolux zatiaľ nemá žiadne entity.", unavailable: "Nedostupná",
     remaining: "Zostáva", ends: "Koniec o", temp: "Teplota", spin: "Otáčky",
     pause: "Pauza", stop: "Stop", resume: "Pokračovať", cancel: "Zrušiť", start: "Štart", on: "Zapnúť",
@@ -36,6 +38,7 @@ const I18N = {
     h: "h", min: "min", desc: "Stav, priebeh a ovládanie práčky z integrácie AEG / Electrolux.",
   },
   cs: {
+    load: "Náplň", overload: "Přetížená!",
     name: "Pračka", none: "Integrace AEG / Electrolux zatím nemá žádné entity.", unavailable: "Nedostupná",
     remaining: "Zbývá", ends: "Konec v", temp: "Teplota", spin: "Otáčky",
     pause: "Pauza", stop: "Stop", resume: "Pokračovat", cancel: "Zrušit", start: "Start", on: "Zapnout",
@@ -45,6 +48,7 @@ const I18N = {
     h: "h", min: "min", desc: "Stav, průběh a ovládání pračky z integrace AEG / Electrolux.",
   },
   de: {
+    load: "Beladung", overload: "Überladen!",
     name: "Waschmaschine", none: "Die Integration AEG / Electrolux hat noch keine Entitäten.", unavailable: "Nicht verfügbar",
     remaining: "Restzeit", ends: "Ende um", temp: "Temperatur", spin: "Schleudern",
     pause: "Pause", stop: "Stopp", resume: "Fortsetzen", cancel: "Abbrechen", start: "Start", on: "Einschalten",
@@ -54,6 +58,7 @@ const I18N = {
     h: "Std.", min: "Min.", desc: "Status, Fortschritt und Steuerung der Waschmaschine aus der Integration AEG / Electrolux.",
   },
   pl: {
+    load: "Wsad", overload: "Przeładowana!",
     name: "Pralka", none: "Integracja AEG / Electrolux nie ma jeszcze żadnych encji.", unavailable: "Niedostępna",
     remaining: "Pozostało", ends: "Koniec o", temp: "Temperatura", spin: "Wirowanie",
     pause: "Pauza", stop: "Stop", resume: "Wznów", cancel: "Anuluj", start: "Start", on: "Włącz",
@@ -63,6 +68,7 @@ const I18N = {
     h: "godz.", min: "min", desc: "Stan, postęp i sterowanie pralką z integracji AEG / Electrolux.",
   },
   es: {
+    load: "Carga", overload: "¡Sobrecargada!",
     name: "Lavadora", none: "La integración AEG / Electrolux aún no tiene entidades.", unavailable: "No disponible",
     remaining: "Restante", ends: "Termina a las", temp: "Temperatura", spin: "Centrifugado",
     pause: "Pausa", stop: "Detener", resume: "Reanudar", cancel: "Cancelar", start: "Iniciar", on: "Encender",
@@ -72,6 +78,7 @@ const I18N = {
     h: "h", min: "min", desc: "Estado, progreso y control de la lavadora de la integración AEG / Electrolux.",
   },
   it: {
+    load: "Carico", overload: "Sovraccarica!",
     name: "Lavatrice", none: "L'integrazione AEG / Electrolux non ha ancora entità.", unavailable: "Non disponibile",
     remaining: "Rimanente", ends: "Termina alle", temp: "Temperatura", spin: "Centrifuga",
     pause: "Pausa", stop: "Stop", resume: "Riprendi", cancel: "Annulla", start: "Avvia", on: "Accendi",
@@ -197,6 +204,8 @@ class AegPrackaCard extends HTMLElement {
     const endAt = this._fmtTime(this._st("sensor.koniec")?.state);
     const temp = this._fmt("sensor.teplota");
     const spin = this._fmt("sensor.odstredovanie");
+    const load = this._fmt("sensor.napln");
+    const overload = this._st("sensor.prosense")?.state === "overload";
     const doorOpen = this._st("binary_sensor.dvierka")?.state === "on";
     const locked = this._st("binary_sensor.zamok_dvierok")?.state === "off";
     const online = this._st("binary_sensor.pripojenie")?.state !== "off";
@@ -212,6 +221,7 @@ class AegPrackaCard extends HTMLElement {
     if (active && endAt) chips.push(["mdi:clock-end", t.ends, endAt]);
     if (temp) chips.push(["mdi:thermometer-water", t.temp, temp]);
     if (spin) chips.push(["mdi:rotate-right", t.spin, spin]);
+    if (load) chips.push(["mdi:weight-kilogram", t.load, load]);
 
     const buttons = [];
     if (state === "running") {
@@ -306,6 +316,7 @@ class AegPrackaCard extends HTMLElement {
             <div class="badges">
               <span class="badge"><ha-icon icon="${doorOpen ? "mdi:door-open" : "mdi:door-closed"}"></ha-icon>${doorOpen ? t.door_open : t.door_closed}</span>
               ${locked ? `<span class="badge"><ha-icon icon="mdi:lock"></ha-icon>${t.locked}</span>` : ""}
+              ${overload ? `<span class="badge warn"><ha-icon icon="mdi:weight-kilogram"></ha-icon>${t.overload}</span>` : ""}
               ${alerts ? `<span class="badge warn"><ha-icon icon="mdi:alert"></ha-icon>${t.alerts.replace("{n}", alerts)}</span>` : ""}
             </div>
           </div>

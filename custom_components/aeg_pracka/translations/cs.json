@@ -209,6 +209,16 @@
       },
       "nastaveny_cas": {
         "name": "Nastavená doba"
+      },
+      "prosense": {
+        "name": "Vážení náplně (ProSense)",
+        "state": {
+          "weighing": "Váží se",
+          "overload": "Přetížená",
+          "available": "K dispozici",
+          "measured": "Zváženo",
+          "none": "Nedostupné"
+        }
       }
     },
     "binary_sensor": {

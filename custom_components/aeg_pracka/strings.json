@@ -350,6 +350,16 @@
       },
       "nastaveny_cas": {
         "name": "Set duration"
+      },
+      "prosense": {
+        "name": "Load sensing (ProSense)",
+        "state": {
+          "weighing": "Weighing",
+          "overload": "Overloaded",
+          "available": "Available",
+          "measured": "Measured",
+          "none": "Unavailable"
+        }
       }
     },
     "binary_sensor": {

@@ -209,6 +209,16 @@
       },
       "nastaveny_cas": {
         "name": "Eingestellte Dauer"
+      },
+      "prosense": {
+        "name": "Beladungserkennung (ProSense)",
+        "state": {
+          "weighing": "Wird gewogen",
+          "overload": "Überladen",
+          "available": "Verfügbar",
+          "measured": "Gemessen",
+          "none": "Nicht verfügbar"
+        }
       }
     },
     "binary_sensor": {

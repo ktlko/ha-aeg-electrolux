@@ -209,6 +209,16 @@
       },
       "nastaveny_cas": {
         "name": "Durata impostata"
+      },
+      "prosense": {
+        "name": "Rilevamento carico (ProSense)",
+        "state": {
+          "weighing": "Pesatura in corso",
+          "overload": "Sovraccarica",
+          "available": "Disponibile",
+          "measured": "Misurato",
+          "none": "Non disponibile"
+        }
       }
     },
     "binary_sensor": {

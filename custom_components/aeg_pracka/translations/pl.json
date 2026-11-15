@@ -209,6 +209,16 @@
       },
       "nastaveny_cas": {
         "name": "Ustawiony czas"
+      },
+      "prosense": {
+        "name": "Ważenie wsadu (ProSense)",
+        "state": {
+          "weighing": "Ważenie",
+          "overload": "Przeładowana",
+          "available": "Dostępne",
+          "measured": "Zważone",
+          "none": "Niedostępne"
+        }
       }
     },
     "binary_sensor": {

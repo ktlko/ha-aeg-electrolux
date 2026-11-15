@@ -209,6 +209,16 @@
       },
       "nastaveny_cas": {
         "name": "Duración ajustada"
+      },
+      "prosense": {
+        "name": "Detección de carga (ProSense)",
+        "state": {
+          "weighing": "Pesando",
+          "overload": "Sobrecargada",
+          "available": "Disponible",
+          "measured": "Medida",
+          "none": "No disponible"
+        }
       }
     },
     "binary_sensor": {

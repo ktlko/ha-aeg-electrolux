@@ -70,11 +70,29 @@ def _total_hours(w: Washer) -> float | None:
 
 
 def _load_kg(w: Washer) -> float | None:
-    """Measured load in kg; 65535 means 'not measured yet'."""
-    for key in ("measuredLoadWeight", "fcOptisenseLoadWeight"):
-        grams = w.get(key)
-        if isinstance(grams, (int, float)) and 0 < grams < 65535:
-            return round(grams / 1000, 1)
+    """Measured load in kg (grams like washingNominalLoadWeight).
+
+    Values from 65408 up are status codes, not weights (see PROSENSE_STATES), so they are ignored.
+    fcOptisenseLoadWeight is never a weight – the AEG app treats it as a status code only.
+    """
+    grams = w.get("measuredLoadWeight")
+    if isinstance(grams, (int, float)) and not isinstance(grams, bool) and 0 < grams < 65000:
+        return round(grams / 1000, 2)
+    return None
+
+
+# fcOptisenseLoadWeight / measuredLoadWeight status codes, as decoded by the AEG app (enum dui).
+PROSENSE_STATES = {65532: "weighing", 65533: "overload", 65408: "available", 65535: "none"}
+
+
+def _prosense(w: Washer) -> str | None:
+    for key in ("fcOptisenseLoadWeight", "measuredLoadWeight"):
+        code = w.get(key)
+        if code in (65532, 65533):
+            return PROSENSE_STATES[code]
+    code = w.get("fcOptisenseLoadWeight")
+    if isinstance(code, int) and not isinstance(code, bool):
+        return PROSENSE_STATES.get(code, "measured" if _load_kg(w) is not None else "none")
     return None
 
 
@@ -156,7 +174,21 @@ SENSORS: tuple[AegSensorDescription, ...] = (
         icon="mdi:weight-kilogram",
         device_class=SensorDeviceClass.WEIGHT,
         native_unit_of_measurement=UnitOfMass.KILOGRAMS,
+        suggested_display_precision=1,
         value_fn=_load_kg,
+        attrs_fn=lambda w: {
+            "measured_raw": w.get("measuredLoadWeight"),
+            "nominal_load_kg": (n / 1000 if isinstance(n := w.get("washingNominalLoadWeight"), (int, float)) and n else None),
+        },
+    ),
+    AegSensorDescription(
+        key="prosense",
+        exists_fn=lambda w: w.has("fcOptisenseLoadWeight"),
+        icon="mdi:scale",
+        device_class=SensorDeviceClass.ENUM,
+        options=["weighing", "overload", "available", "measured", "none"],
+        value_fn=_prosense,
+        attrs_fn=lambda w: {"raw": w.get("fcOptisenseLoadWeight")},
     ),
     AegSensorDescription(
         key="tvrdost_vody",
